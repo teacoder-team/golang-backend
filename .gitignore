@@ -1,0 +1,39 @@
+# Binary files
+/bin
+/build
+/dist
+/*.exe
+/*.exe~
+/*.out
+
+# Dependency directories
+/vendor
+
+# Go workspace file
+go.work
+
+# Go build cache
+*.cache
+
+# Test binary files
+*.test
+
+# IDE directories and files
+.vscode/
+/.idea/
+/*.sublime-workspace
+/.DS_Store
+*.iml
+
+# Logs and temporary files
+*.log
+*.tmp
+*.swp
+
+# Environment files (you might want to ignore your .env for security reasons)
+.env
+.env.local
+
+# Coverage reports
+*.cover
+coverage/
