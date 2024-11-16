@@ -1,0 +1,66 @@
+definitions:
+  routes.UserDTO:
+    description: Данные, используемые для создания нового пользователя
+    properties:
+      display_name:
+        example: Иван Иванов
+        type: string
+      email:
+        example: user@example.com
+        type: string
+      password:
+        example: password123
+        type: string
+    required:
+    - display_name
+    - email
+    - password
+    type: object
+  utils.ErrorResponse:
+    properties:
+      message:
+        type: string
+      status:
+        type: integer
+    type: object
+info:
+  contact:
+    email: help@teacoder.ru
+    name: TeaCoder Team
+    url: https://teacoder.ru
+  description: API for Teacoder educational platform
+  title: TeaCoder API
+  version: 1.0.0
+paths:
+  /auth/account/create:
+    post:
+      consumes:
+      - application/json
+      description: Данный метод создает нового пользователя на основе предоставленных
+        данных.
+      parameters:
+      - description: Данные для создания нового пользователя
+        in: body
+        name: user
+        required: true
+        schema:
+          $ref: '#/definitions/routes.UserDTO'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: Пользователь успешно создан
+          schema:
+            $ref: '#/definitions/routes.UserDTO'
+        "400":
+          description: Некорректные данные для создания пользователя
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+        "409":
+          description: Пользователь с таким email уже существует
+          schema:
+            $ref: '#/definitions/utils.ErrorResponse'
+      summary: Создать нового пользователя
+      tags:
+      - Account
+swagger: "2.0"

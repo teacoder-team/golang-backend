@@ -24,6 +24,12 @@ type Config struct {
 	PostgresPort     int
 	PostgresDatabase string
 	PostgresURI      string
+
+	RedisUser     string
+	RedisPassword string
+	RedisHost     string
+	RedisPort     int
+	RedisURI      string
 }
 
 func LoadConfig() (*Config, error) {
@@ -37,6 +43,11 @@ func LoadConfig() (*Config, error) {
 	}
 
 	postgresPort, err := strconv.Atoi(getEnv("POSTGRES_PORT", "5433"))
+	if err != nil {
+		return nil, err
+	}
+
+	redisPort, err := strconv.Atoi(getEnv("REDIS_PORT", "5433"))
 	if err != nil {
 		return nil, err
 	}
@@ -62,6 +73,12 @@ func LoadConfig() (*Config, error) {
 		PostgresPort:     postgresPort,
 		PostgresDatabase: getEnv("POSTGRES_DATABASE", ""),
 		PostgresURI:      os.ExpandEnv(getEnv("POSTGRES_URI", "postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@${POSTGRES_HOST}:${POSTGRES_PORT}/${POSTGRES_DATABASE}")),
+
+		RedisUser:     getEnv("REDIS_USER", "root"),
+		RedisPassword: getEnv("REDIS_PASSWORD", ""),
+		RedisHost:     getEnv("REDIS_HOST", "localhost"),
+		RedisPort:     redisPort,
+		RedisURI:      os.ExpandEnv(getEnv("REDIS_URI", "redis://${REDIS_PASSWORD}@${REDIS_HOST}:${REDIS_PORT}")),
 	}
 
 	return config, nil
